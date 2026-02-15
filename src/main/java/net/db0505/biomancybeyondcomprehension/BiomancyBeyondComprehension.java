@@ -1,6 +1,7 @@
 package net.db0505.biomancybeyondcomprehension;
 
 import com.mojang.logging.LogUtils;
+import net.db0505.biomancybeyondcomprehension.block.ModBlocks;
 import net.db0505.biomancybeyondcomprehension.item.ModCreativeModeTabs;
 import net.db0505.biomancybeyondcomprehension.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -32,6 +33,7 @@ public class BiomancyBeyondComprehension
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 

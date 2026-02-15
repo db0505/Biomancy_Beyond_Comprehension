@@ -2,5 +2,7 @@
   "item.biomancybeyondcomprehension.brain": "Brain",
   "item.biomancybeyondcomprehension.eye": "Eye",
 
-  "creativetab,beyond_comprehension": "Biomancy - Beyond Comprehension"
+  "block.biomancybeyondcomprehension.malignant_optic_block": "Malignant Optic Block",
+
+  "creativetab.beyond_comprehension": "Biomancy - Beyond Comprehension"
 }
