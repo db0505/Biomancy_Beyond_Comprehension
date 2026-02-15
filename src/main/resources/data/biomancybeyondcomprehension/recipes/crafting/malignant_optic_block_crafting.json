@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+      "###",
+      "#S#",
+      "###"
+  ],
+  "key": {
+    "#": {
+      "item": "biomancy:malignant_flesh_veins"
+    },
+    "S": {
+      "item": "biomancybeyondcomprehension:eye"
+    }
+  },
+    "result": {
+      "item": "biomancybeyondcomprehension:malignant_optic_block"
+  }
+}
