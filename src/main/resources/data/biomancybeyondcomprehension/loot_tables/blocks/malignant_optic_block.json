@@ -1,0 +1,21 @@
+{
+  "types": "minecraft:block",
+  "pools": [
+    {
+      "bonus rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "biomancybeyondcomprehension:malignant_optic_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "biomancybeyondcomprehension:blocks/malignant_optic_block"
+}

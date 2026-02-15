@@ -2,6 +2,7 @@ package net.db0505.biomancybeyondcomprehension.block;
 
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
 import net.db0505.biomancybeyondcomprehension.item.ModItems;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -18,8 +19,21 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, BiomancyBeyondComprehension.MOD_ID);
 
+    // For using block behaviour from biomancy
+    public static final RegistryObject<Block> MALIGNANT_OPTIC_BLOCK =
+            registryBlock("malignant_optic_block",
+                    () -> {
+                        Block malignant_flesh = ForgeRegistries.BLOCKS.getValue(
+                                ResourceLocation.fromNamespaceAndPath("biomancy", "malignant_flesh")
+                        );
+
+                        return new Block(BlockBehaviour.Properties.copy(malignant_flesh));
+                    });
+
+    /* For regular block implemtation
     public static final RegistryObject<Block> MALIGNANT_OPTIC_BLOCK = registryBlock("malignant_optic_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
+    */
 
     private static <T extends Block> RegistryObject<T> registryBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
