@@ -26,15 +26,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
-        Item maligant_flesh = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("biomancy", "malignant_flesh")
+        Item maligant_flesh_veins = ForgeRegistries.ITEMS.getValue(
+                ResourceLocation.fromNamespaceAndPath("biomancy", "malignant_flesh_veins")
         );
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MALIGNANT_OPTIC_BLOCK.get())
                 .pattern("###")
                 .pattern("#0#")
                 .pattern("###")
-                .define('#', maligant_flesh)
+                .define('#', maligant_flesh_veins)
                 .define('0', ModItems.EYE.get())
                 .unlockedBy(getHasName(ModItems.EYE.get()), has(ModItems.EYE.get()))
                 .save(pWriter);

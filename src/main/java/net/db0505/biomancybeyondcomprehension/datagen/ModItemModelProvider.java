@@ -23,8 +23,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
-            new ResourceLocation("item/generated")).texture("later0",
-            new ResourceLocation(BiomancyBeyondComprehension.MOD_ID, "item/" + item.getId().getPath()));
+                ResourceLocation.tryParse("item/generated")).texture("layer0",
+                ResourceLocation.tryBuild(BiomancyBeyondComprehension.MOD_ID, "item/" + item.getId().getPath()));
     }
 
 }

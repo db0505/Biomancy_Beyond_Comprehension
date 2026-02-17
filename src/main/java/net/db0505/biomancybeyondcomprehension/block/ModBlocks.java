@@ -30,6 +30,7 @@ public class ModBlocks {
                         return new Block(BlockBehaviour.Properties.copy(malignant_flesh));
                     });
 
+    /*
     public static final RegistryObject<Block> BIO_SCRYER =
             registryBlock("bio_scryer",
                     () -> {
@@ -40,6 +41,8 @@ public class ModBlocks {
                         return new Block(BlockBehaviour.Properties.copy(bio_forge));
                     });
 
+
+     */
     /*
     public static final RegistryObject<Block> BIO_SCRYER = registryBlock("bio_scryer",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
