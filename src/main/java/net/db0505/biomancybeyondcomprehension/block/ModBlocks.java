@@ -30,10 +30,20 @@ public class ModBlocks {
                         return new Block(BlockBehaviour.Properties.copy(malignant_flesh));
                     });
 
-    /* For regular block implemtation
-    public static final RegistryObject<Block> MALIGNANT_OPTIC_BLOCK = registryBlock("malignant_optic_block",
+    public static final RegistryObject<Block> BIO_SCRYER =
+            registryBlock("bio_scryer",
+                    () -> {
+                        Block bio_forge = ForgeRegistries.BLOCKS.getValue(
+                                ResourceLocation.fromNamespaceAndPath("biomancy", "bio_forge")
+                        );
+
+                        return new Block(BlockBehaviour.Properties.copy(bio_forge));
+                    });
+
+    /*
+    public static final RegistryObject<Block> BIO_SCRYER = registryBlock("bio_scryer",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
-    */
+     */
 
     private static <T extends Block> RegistryObject<T> registryBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
