@@ -2,8 +2,12 @@ package net.db0505.biomancybeyondcomprehension;
 
 import com.mojang.logging.LogUtils;
 import net.db0505.biomancybeyondcomprehension.block.ModBlocks;
+import net.db0505.biomancybeyondcomprehension.entity.Client.MalformedFleshBlobRenderer;
+import net.db0505.biomancybeyondcomprehension.entity.ModEntities;
 import net.db0505.biomancybeyondcomprehension.item.ModCreativeModeTabs;
 import net.db0505.biomancybeyondcomprehension.item.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,6 +38,7 @@ public class BiomancyBeyondComprehension
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -64,12 +69,10 @@ public class BiomancyBeyondComprehension
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
+    public static class ClientModEvents {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(ModEntities.MalformedFleshBlob.get(), MalformedFleshBlobRenderer::new);
         }
     }
 }
