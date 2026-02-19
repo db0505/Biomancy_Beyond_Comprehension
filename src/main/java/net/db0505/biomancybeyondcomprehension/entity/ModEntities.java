@@ -2,6 +2,7 @@ package net.db0505.biomancybeyondcomprehension.entity;
 
 
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
+import net.db0505.biomancybeyondcomprehension.entity.custom.FleshWeaverEntity;
 import net.db0505.biomancybeyondcomprehension.entity.custom.MalformedFleshBlobEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -17,6 +18,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<MalformedFleshBlobEntity>> MalformedFleshBlob =
             ENTITY_TYPES.register("malformedfleshblob", () -> EntityType.Builder.of(MalformedFleshBlobEntity::new, MobCategory.CREATURE)
                     .sized(1.5f,0.5f).build("malformedfleshblob"));
+
+    public static final RegistryObject<EntityType<FleshWeaverEntity>> FleshWeaver =
+            ENTITY_TYPES.register("fleshweaver", () -> EntityType.Builder.of(FleshWeaverEntity::new, MobCategory.CREATURE)
+                    .sized(1.5f,0.5f).build("fleshweaver"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 public class MalformedFleshBlobRenderer extends MobRenderer<MalformedFleshBlobEntity, MalformedFleshBlobModel<MalformedFleshBlobEntity>> {
 
     public MalformedFleshBlobRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new MalformedFleshBlobModel<>(pContext.bakeLayer(ModModelLayers.MALFORMED_FLESH_BLOB_LAYER)), 2f);
+        super(pContext, new MalformedFleshBlobModel<>(pContext.bakeLayer(ModModelLayers.MALFORMED_FLESH_BLOB_LAYER)), .5f);
     }
 
     @Override

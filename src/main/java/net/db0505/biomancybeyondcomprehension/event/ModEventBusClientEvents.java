@@ -1,6 +1,7 @@
 package net.db0505.biomancybeyondcomprehension.event;
 
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
+import net.db0505.biomancybeyondcomprehension.entity.Client.FleshWeaverModel;
 import net.db0505.biomancybeyondcomprehension.entity.Client.MalformedFleshBlobModel;
 import net.db0505.biomancybeyondcomprehension.entity.Client.ModModelLayers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,6 +14,8 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.MALFORMED_FLESH_BLOB_LAYER, MalformedFleshBlobModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.FLESH_WEAVER_LAYER, FleshWeaverModel::createBodyLayer);
+
     }
 }
 

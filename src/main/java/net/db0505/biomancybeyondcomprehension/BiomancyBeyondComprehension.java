@@ -2,6 +2,7 @@ package net.db0505.biomancybeyondcomprehension;
 
 import com.mojang.logging.LogUtils;
 import net.db0505.biomancybeyondcomprehension.block.ModBlocks;
+import net.db0505.biomancybeyondcomprehension.entity.Client.FleshWeaverRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.Client.MalformedFleshBlobRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.ModEntities;
 import net.db0505.biomancybeyondcomprehension.item.ModCreativeModeTabs;
@@ -73,6 +74,7 @@ public class BiomancyBeyondComprehension
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.MalformedFleshBlob.get(), MalformedFleshBlobRenderer::new);
+            EntityRenderers.register(ModEntities.FleshWeaver.get(), FleshWeaverRenderer::new);
         }
     }
 }
