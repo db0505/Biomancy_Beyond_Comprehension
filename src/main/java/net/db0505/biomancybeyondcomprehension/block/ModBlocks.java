@@ -1,7 +1,8 @@
 package net.db0505.biomancybeyondcomprehension.block;
 
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
-import net.db0505.biomancybeyondcomprehension.item.ModItems;
+import net.db0505.biomancybeyondcomprehension.block.custom.BioScryerBlock;
+import net.db0505.biomancybeyondcomprehension.item.BeyondModItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -43,10 +44,10 @@ public class ModBlocks {
 
 
      */
-    /*
+
     public static final RegistryObject<Block> BIO_SCRYER = registryBlock("bio_scryer",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
-     */
+            () -> new BioScryerBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
+
 
     private static <T extends Block> RegistryObject<T> registryBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
@@ -55,7 +56,7 @@ public class ModBlocks {
     }
 
     private static <T extends  Block>RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block){
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        return BeyondModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
     public static void register(IEventBus eventBus) {

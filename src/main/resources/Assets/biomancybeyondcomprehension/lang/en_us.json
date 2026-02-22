@@ -1,8 +1,10 @@
 {
   "item.biomancybeyondcomprehension.brain": "Brain",
   "item.biomancybeyondcomprehension.eye": "Eye",
+  "item.biomancybeyondcomprehension.scryer_brain": "Scryer Brain",
 
   "block.biomancybeyondcomprehension.malignant_optic_block": "Malignant Optic Block",
+  "block.biomancybeyondcomprehension.bio_scryer": "Bio Scryer",
 
   "item.biomancybeyondcomprehension.hemoclast_sword": "Hemoclast",
 

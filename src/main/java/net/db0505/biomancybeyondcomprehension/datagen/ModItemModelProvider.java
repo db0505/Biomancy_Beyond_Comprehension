@@ -1,7 +1,7 @@
 package net.db0505.biomancybeyondcomprehension.datagen;
 
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
-import net.db0505.biomancybeyondcomprehension.item.ModItems;
+import net.db0505.biomancybeyondcomprehension.item.BeyondModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -17,8 +17,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        simpleItem(ModItems.EYE);
-        simpleItem(ModItems.BRAIN);
+        simpleItem(BeyondModItems.EYE);
+        simpleItem(BeyondModItems.BRAIN);
+        simpleItem(BeyondModItems.SCRYER_BRAIN);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

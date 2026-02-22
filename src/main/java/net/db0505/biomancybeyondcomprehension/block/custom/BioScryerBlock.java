@@ -11,11 +11,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class bio_scryer extends BaseEntityBlock {
+public class BioScryerBlock extends BaseEntityBlock {
 
     public static final VoxelShape SHAPE = Block.box(0,0,0,16,13,16);
 
-    public  bio_scryer(Properties pProperties) {
+    public BioScryerBlock(Properties pProperties) {
         super(pProperties);
     }
 

@@ -1,14 +1,17 @@
 package net.db0505.biomancybeyondcomprehension.datagen;
 
-import com.github.elenterius.biomancy.BiomancyMod;
+import com.github.elenterius.biomancy.datagen.recipes.builder.BioForgingRecipeBuilder;
+import com.github.elenterius.biomancy.datagen.recipes.builder.ItemData;
+import com.github.elenterius.biomancy.init.ModBioForgeTabs;
+import com.github.elenterius.biomancy.init.ModItems;
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
 import net.db0505.biomancybeyondcomprehension.block.ModBlocks;
-import net.db0505.biomancybeyondcomprehension.item.ModItems;
+import net.db0505.biomancybeyondcomprehension.item.BeyondModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -20,12 +23,15 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
+
     public ModRecipeProvider(PackOutput pOutput) {
         super(pOutput);
     }
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
+
+
         Item maligant_flesh_veins = ForgeRegistries.ITEMS.getValue(
                 ResourceLocation.fromNamespaceAndPath("biomancy", "malignant_flesh_veins")
         );
@@ -35,10 +41,29 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("#0#")
                 .pattern("###")
                 .define('#', maligant_flesh_veins)
-                .define('0', ModItems.EYE.get())
-                .unlockedBy(getHasName(ModItems.EYE.get()), has(ModItems.EYE.get()))
+                .define('0', BeyondModItems.EYE.get())
+                .unlockedBy(getHasName(BeyondModItems.EYE.get()), has(BeyondModItems.EYE.get()))
                 .save(pWriter);
+
+        // Crafting for adding recipes to the bio-forge
+        BioForgingRecipeBuilder.create(
+                        BiomancyBeyondComprehension.MOD_ID,
+                        "hemoclast_sword",
+                        new ItemData(new ItemStack(BeyondModItems.HEMOCLAST_SWORD.get()))
+                )
+                .addIngredient(ModItems.BONE_FRAGMENTS.get(), 25)
+                .addIngredient(ModItems.FLESH_BITS.get(), 8)
+                .addIngredient(ModItems.MINERAL_FRAGMENT.get(), 15)
+                .addIngredient(ModItems.LIVING_FLESH.get(), 1)
+                .addIngredient(BeyondModItems.EYE.get(), 1)
+                .setCraftingCost(250)
+                .setCategory(ModBioForgeTabs.TOOLS)
+                .unlockedBy(getHasName(BeyondModItems.EYE.get()), has(BeyondModItems.EYE.get()))
+                .save(pWriter);
+
     }
+
+
 
     protected static void oreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTIme, String pGroup) {
         oreCooking(pFinishedRecipeConsumer, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTIme, pGroup, "_from_smelting");

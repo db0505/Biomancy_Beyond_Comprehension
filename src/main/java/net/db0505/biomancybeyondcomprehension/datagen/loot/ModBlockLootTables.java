@@ -20,6 +20,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         this.dropSelf(ModBlocks.MALIGNANT_OPTIC_BLOCK.get());
+        this.dropSelf(ModBlocks.BIO_SCRYER.get());
     }
 
     @Override

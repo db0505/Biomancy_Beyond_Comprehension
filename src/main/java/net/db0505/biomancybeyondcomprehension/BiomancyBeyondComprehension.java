@@ -6,8 +6,7 @@ import net.db0505.biomancybeyondcomprehension.entity.Client.FleshWeaverRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.Client.MalformedFleshBlobRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.ModEntities;
 import net.db0505.biomancybeyondcomprehension.item.ModCreativeModeTabs;
-import net.db0505.biomancybeyondcomprehension.item.ModItems;
-import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.db0505.biomancybeyondcomprehension.item.BeyondModItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,7 +36,7 @@ public class BiomancyBeyondComprehension
 
         ModCreativeModeTabs.register(modEventBus);
 
-        ModItems.register(modEventBus);
+        BeyondModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
 
@@ -56,8 +55,9 @@ public class BiomancyBeyondComprehension
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.BRAIN);
-            event.accept(ModItems.EYE);
+            event.accept(BeyondModItems.BRAIN);
+            event.accept(BeyondModItems.EYE);
+            event.accept(BeyondModItems.SCRYER_BRAIN);
         }
     }
 
