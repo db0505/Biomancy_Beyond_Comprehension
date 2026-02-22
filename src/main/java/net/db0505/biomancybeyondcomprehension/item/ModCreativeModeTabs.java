@@ -23,6 +23,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BRAIN.get());
                         pOutput.accept(ModItems.EYE.get());
 
+                        pOutput.accept(ModItems.HEMOCLAST_SWORD.get());
+
                         pOutput.accept(ModBlocks.MALIGNANT_OPTIC_BLOCK.get());
                     })
                     .build());
