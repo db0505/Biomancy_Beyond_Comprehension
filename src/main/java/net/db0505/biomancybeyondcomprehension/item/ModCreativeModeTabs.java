@@ -25,6 +25,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(BeyondModItems.HEMOCLAST_SWORD.get());
 
                         pOutput.accept(ModBlocks.MALIGNANT_OPTIC_BLOCK.get());
+
+                        pOutput.accept(ModBlocks.BIO_SCRYER.get());
                     })
                     .build());
 

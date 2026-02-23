@@ -1,0 +1,29 @@
+{
+  "type": "biomancy:bio_forging",
+  "bio_forge_tab": "biomancy:tools",
+  "ingredients": [
+    {
+      "count": 25,
+      "item": "biomancy:bone_fragments"
+    },
+    {
+      "count": 8,
+      "item": "biomancy:flesh_bits"
+    },
+    {
+      "count": 15,
+      "item": "biomancy:mineral_fragment"
+    },
+    {
+      "item": "biomancy:living_flesh"
+    },
+    {
+      "item": "biomancybeyondcomprehension:eye"
+    }
+  ],
+  "nutrientsCost": 250,
+  "result": {
+    "item": "biomancybeyondcomprehension:hemoclast_sword",
+    "nbt": "{Damage:0}"
+  }
+}

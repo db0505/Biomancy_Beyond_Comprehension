@@ -2,11 +2,15 @@ package net.db0505.biomancybeyondcomprehension;
 
 import com.mojang.logging.LogUtils;
 import net.db0505.biomancybeyondcomprehension.block.ModBlocks;
+import net.db0505.biomancybeyondcomprehension.block.entity.ModBlockEntities;
 import net.db0505.biomancybeyondcomprehension.entity.Client.FleshWeaverRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.Client.MalformedFleshBlobRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.ModEntities;
 import net.db0505.biomancybeyondcomprehension.item.ModCreativeModeTabs;
 import net.db0505.biomancybeyondcomprehension.item.BeyondModItems;
+import net.db0505.biomancybeyondcomprehension.screen.BioScryerScreen;
+import net.db0505.biomancybeyondcomprehension.screen.ModMenuTypes;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,6 +43,9 @@ public class BiomancyBeyondComprehension
         BeyondModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
+
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -75,6 +82,8 @@ public class BiomancyBeyondComprehension
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.MalformedFleshBlob.get(), MalformedFleshBlobRenderer::new);
             EntityRenderers.register(ModEntities.FleshWeaver.get(), FleshWeaverRenderer::new);
+
+            MenuScreens.register(ModMenuTypes.BIO_SCRYER_MENU.get(), BioScryerScreen::new);
         }
     }
 }
