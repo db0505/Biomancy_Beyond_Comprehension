@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "biomancybeyondcomprehension:block/scrying_eye",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "biomancybeyondcomprehension:block/scrying_eye"
+    },
+    "facing=south": {
+      "model": "biomancybeyondcomprehension:block/scrying_eye",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "biomancybeyondcomprehension:block/scrying_eye",
+      "y": 270
+    }
+  }
+}

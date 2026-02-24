@@ -1,5 +1,8 @@
-// 1.20.1	2026-02-22T18:49:21.9786658	Block States: biomancybeyondcomprehension
+// 1.20.1	2026-02-24T23:20:24.9819164	Block States: biomancybeyondcomprehension
 b93ce682708bd28c776efcc698a82b4175b53d96 assets/biomancybeyondcomprehension/blockstates/bio_scryer.json
 d3412f3ebf82c31c8987e1bbb03ab57a8b466ded assets/biomancybeyondcomprehension/blockstates/malignant_optic_block.json
+11b5185a7995dc426b09f00a24d35a520f6b77c8 assets/biomancybeyondcomprehension/blockstates/scrying_eye.json
 0cb52c30f776ca230e04651904e3ec9b58ee48dc assets/biomancybeyondcomprehension/models/block/malignant_optic_block.json
+4d9aa7f6de7d1b436ceaabf98473701e0f1307e6 assets/biomancybeyondcomprehension/models/item/bio_scryer.json
 c97fbbb2117900ed3446ca1e1b8652924a253f68 assets/biomancybeyondcomprehension/models/item/malignant_optic_block.json
+e3b71151442a1c0368afc2a253fbcef17cf7eb81 assets/biomancybeyondcomprehension/models/item/scrying_eye.json

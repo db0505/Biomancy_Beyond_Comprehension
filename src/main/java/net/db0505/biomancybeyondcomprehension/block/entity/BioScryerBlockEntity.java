@@ -32,8 +32,6 @@ public class BioScryerBlockEntity extends BlockEntity implements MenuProvider {
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
     protected final ContainerData data;
-    private int progess = 0;
-    private int maxProgress = 70;
 
     public BioScryerBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.BIO_SCRYER_BE.get(),pPos, pBlockState);
@@ -41,8 +39,6 @@ public class BioScryerBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public int get(int pIndex) {
                 return switch (pIndex) {
-                    case 0 -> BioScryerBlockEntity.this.progess;
-                    case 1 -> BioScryerBlockEntity.this.maxProgress;
                     default ->  0;
                 };
 
@@ -51,8 +47,6 @@ public class BioScryerBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 0 -> BioScryerBlockEntity.this.progess = pValue;
-                    case 1 -> BioScryerBlockEntity.this.maxProgress = pValue;
                 }
             }
 
@@ -105,8 +99,6 @@ public class BioScryerBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
-        pTag.putInt("bio_scryer.progress", progess);
-
         super.saveAdditional(pTag);
     }
 
@@ -114,7 +106,6 @@ public class BioScryerBlockEntity extends BlockEntity implements MenuProvider {
     public void load(CompoundTag pTag) {
         super.load(pTag);
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
-        progess = pTag.getInt("bio_scryer.progress");
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {

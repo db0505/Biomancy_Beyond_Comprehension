@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class BioScryerBlock extends BaseEntityBlock {
 
-    public static final VoxelShape SHAPE = Block.box(0,0,0,16,13,16);
+    public static final VoxelShape SHAPE = Block.box(0,0,0,16,16,16);
 
     public BioScryerBlock(Properties pProperties) {
         super(pProperties);
@@ -58,6 +58,7 @@ public class BioScryerBlock extends BaseEntityBlock {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             if (entity instanceof BioScryerBlockEntity) {
                 NetworkHooks.openScreen(((ServerPlayer)pPlayer), (BioScryerBlockEntity)entity, pPos);
+                return InteractionResult.CONSUME;
             } else {
                 throw new IllegalStateException("Our container provider is missing!");
             }

@@ -1,9 +1,9 @@
 package net.db0505.biomancybeyondcomprehension.screen;
 
-import com.github.elenterius.biomancy.init.ModItems;
 import net.db0505.biomancybeyondcomprehension.block.ModBlocks;
 import net.db0505.biomancybeyondcomprehension.block.entity.BioScryerBlockEntity;
 import net.db0505.biomancybeyondcomprehension.item.BeyondModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -15,26 +15,39 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 
-import static net.minecraft.nbt.NbtUtils.readBlockPos;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BioScryerMenu extends AbstractContainerMenu {
+
     public final BioScryerBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public BioScryerMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this (pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    private static final int HOTBAR_SLOT_COUNT = 9;
+    private static final int PLAYER_INV_ROW_COUNT = 3;
+    private static final int PLAYER_INV_COL_COUNT = 9;
+    private static final int PLAYER_INV_SLOT_COUNT = PLAYER_INV_COL_COUNT * PLAYER_INV_ROW_COUNT;
+
+    private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INV_SLOT_COUNT;
+    private static final int VANILLA_FIRST_SLOT_INDEX = 0;
+
+    public static final int TE_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
+    private static final int TE_SLOT_COUNT = 1;
+
+    public BioScryerMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv,
+                inv.player.level().getBlockEntity(extraData.readBlockPos()),
+                new SimpleContainerData(2));
     }
 
-    public BioScryerMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.BIO_SCRYER_MENU.get(), pContainerId);
-        checkContainerSize(inv, 2);
-        blockEntity = ((BioScryerBlockEntity) entity);
+    public BioScryerMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
+
+        super(ModMenuTypes.BIO_SCRYER_MENU.get(), id);
+
+        this.blockEntity = (BioScryerBlockEntity) entity;
         this.level = inv.player.level();
         this.data = data;
 
@@ -42,27 +55,63 @@ public class BioScryerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+
             this.addSlot(new SlotItemHandler(handler, 0, 80, 25) {
+
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return stack.is(BeyondModItems.SCRYER_BRAIN.get());
                 }
 
-                @Override
-                public void set(ItemStack stack) {
-                    super.set(stack);
-
-                    // Access NBT here
-                    if (stack.hasTag()) {
-                        CompoundTag tag = stack.getTag();
-                        // Example: read your connected eyes list
-                        ListTag eyes = tag.getList("ConnectedEyes", Tag.TAG_COMPOUND);
-                    }
-                }
             });
+
         });
 
         addDataSlots(data);
+    }
+
+
+    public ItemStack getScryerBrainStack() {
+
+        Slot slot = this.slots.get(TE_SLOT_INDEX);
+
+        if (slot.hasItem())
+            return slot.getItem();
+
+        return ItemStack.EMPTY;
+    }
+
+    public int getConnectedEyeCount() {
+
+        ItemStack scryerBrain = getScryerBrainStack();
+
+        if (!scryerBrain.hasTag())
+            return 0;
+
+        ListTag list = scryerBrain.getTag().getList("ConnectedEyes", Tag.TAG_COMPOUND);
+
+        return list.size();
+    }
+
+    public List<BlockPos> getEyePositions() {
+
+        List<BlockPos> result = new ArrayList<>();
+
+        ItemStack brain = getScryerBrainStack();
+
+        if (!brain.hasTag())
+            return result;
+
+        ListTag list = brain.getTag().getList("ConnectedEyes", Tag.TAG_COMPOUND);
+
+        for (Tag t : list) {
+
+            CompoundTag posTag = (CompoundTag) t;
+
+            result.add(BlockPos.of(posTag.getLong("Pos")));
+        }
+
+        return result;
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -72,12 +121,10 @@ public class BioScryerMenu extends AbstractContainerMenu {
     //  0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 - 8)
     //  9 - 35 = player inventory slots (which map to the InventoryPlayer slot numbers 9 - 35)
     //  36 - 44 = TileInventory slots, which map to our TileEntity slot numbers 0 - 8)
-    private static final int HOTBAR_SLOT_COUNT = 9;
     private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
     private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
     private static final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
-    private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
-    private static final int VANILLA_FIRST_SLOT_INDEX = 0;
+
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
@@ -115,24 +162,43 @@ public class BioScryerMenu extends AbstractContainerMenu {
         return copyOfSourceStack;
     }
 
-
     @Override
-    public boolean stillValid(Player pPlayer) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, ModBlocks.BIO_SCRYER.get());
+    public boolean stillValid(Player player) {
+
+        return stillValid(
+                ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
+                player,
+                ModBlocks.BIO_SCRYER.get()
+        );
     }
 
-    private void addPlayerInventory(Inventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 111 + i * 18));
+    private void addPlayerInventory(Inventory inv) {
+
+        for (int row = 0; row < 3; row++) {
+
+            for (int col = 0; col < 9; col++) {
+
+                addSlot(new Slot(
+                        inv,
+                        col + row * 9 + 9,
+                        8 + col * 18,
+                        111 + row * 18
+                ));
             }
         }
     }
 
-    private void addPlayerHotbar(Inventory playerInventory) {
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 169));
+    private void addPlayerHotbar(Inventory inv) {
+
+        for (int col = 0; col < 9; col++) {
+
+            addSlot(new Slot(
+                    inv,
+                    col,
+                    8 + col * 18,
+                    169
+            ));
         }
     }
+
 }

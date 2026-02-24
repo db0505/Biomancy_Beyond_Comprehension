@@ -1,3 +1,4 @@
-// 1.20.1	2026-02-22T18:49:21.9806674	Loot Tables
+// 1.20.1	2026-02-24T19:42:30.3016472	Loot Tables
 7713797cccba32c12efa078939bb2a507e49669b data/biomancybeyondcomprehension/loot_tables/blocks/bio_scryer.json
 95084cb7aae3e5e7f40a2e5096b621934e5efd39 data/biomancybeyondcomprehension/loot_tables/blocks/malignant_optic_block.json
+03a350ea29be3756a04b6396cec1d219f5164b3c data/biomancybeyondcomprehension/loot_tables/blocks/scrying_eye.json

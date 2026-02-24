@@ -27,6 +27,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.MALIGNANT_OPTIC_BLOCK.get());
 
                         pOutput.accept(ModBlocks.BIO_SCRYER.get());
+                        pOutput.accept(ModBlocks.SCRYING_EYE.get());
                     })
                     .build());
 

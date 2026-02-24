@@ -17,6 +17,11 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(BioScryerBlockEntity::new,
                             ModBlocks.BIO_SCRYER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<ScryingEyeBlockEntity>> SCRYING_EYE_BE =
+            BLOCK_ENTITIES.register("scrying_eye_be", () ->
+                    BlockEntityType.Builder.of(ScryingEyeBlockEntity::new,
+                            ModBlocks.SCRYING_EYE.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }
