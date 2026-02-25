@@ -2,20 +2,14 @@ package net.db0505.biomancybeyondcomprehension.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +51,7 @@ public class BioScryerScreen extends AbstractContainerScreen<BioScryerMenu> {
         int startX = leftPos + 40;
         int startY = topPos + 50;
 
-        int connectedEyes = menu.getConnectedEyeCount();
+        ListTag connectedEyes = menu.getConnectedEyes();
 
         for (int i = 0; i < 10; i++) {
 
@@ -66,20 +60,14 @@ public class BioScryerScreen extends AbstractContainerScreen<BioScryerMenu> {
 
             final int index = i;
 
-            Button button = Button.builder(
-                            Component.literal(""),
+            int finalI = i;
+            Button button = Button.builder(Component.literal(""),
                             b -> {
+                                //System.out.println("Eye button clicked: " + connectedEyes.get(index));
+                            }).bounds(x, y, 16, 16).build();
 
-                                System.out.println("Eye button clicked: " + index);
-
-                            })
-                    .bounds(x, y, 16, 16)
-                    .build();
-
-            button.active = index < connectedEyes;
-
+            button.active = index < connectedEyes.size();
             eyeButtons.add(button);
-
             addRenderableWidget(button);
         }
     }
@@ -92,7 +80,7 @@ public class BioScryerScreen extends AbstractContainerScreen<BioScryerMenu> {
 
         super.containerTick();
 
-        int connectedEyes = menu.getConnectedEyeCount();
+        int connectedEyes = menu.getConnectedEyes().size();
 
         for (int i = 0; i < eyeButtons.size(); i++) {
 
