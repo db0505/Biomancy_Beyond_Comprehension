@@ -7,23 +7,17 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public class ModNetworking {
 
-    private static final String VERSION = "1";
+    private static int id = 0;
 
-    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            ResourceLocation.fromNamespaceAndPath(BiomancyBeyondComprehension.MOD_ID, "main"),
-            () -> "1.0",
-            s -> true,
-            s -> true
-    );
-
-    public static void registerPackets() {
-        int id = 0;
-        CHANNEL.registerMessage(id++, ViewEyePacket.class, ViewEyePacket::encode, ViewEyePacket::decode, ViewEyePacket::handle);
-    }
+    public static final SimpleChannel CHANNEL =
+            NetworkRegistry.newSimpleChannel(
+                    ResourceLocation.fromNamespaceAndPath(BiomancyBeyondComprehension.MOD_ID, "main"),
+                    () -> "1",
+                    s -> true,
+                    s -> true
+            );
 
     public static void register() {
-
-        int id = 0;
 
         CHANNEL.registerMessage(
                 id++,

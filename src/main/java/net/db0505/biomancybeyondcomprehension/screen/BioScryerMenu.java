@@ -83,14 +83,12 @@ public class BioScryerMenu extends AbstractContainerMenu {
 
     public ListTag getConnectedEyes() {
 
-        ItemStack scryerBrain = getScryerBrainStack();
+        ItemStack brain = getScryerBrainStack();
 
-        if (!scryerBrain.hasTag())
+        if (!brain.hasTag())
             return new ListTag();
 
-        ListTag list = scryerBrain.getTag().getList("ConnectedEyes", Tag.TAG_COMPOUND);
-
-        return list;
+        return brain.getTag().getList("ConnectedEyes", Tag.TAG_COMPOUND);
     }
 
     public List<BlockPos> getEyePositions() {

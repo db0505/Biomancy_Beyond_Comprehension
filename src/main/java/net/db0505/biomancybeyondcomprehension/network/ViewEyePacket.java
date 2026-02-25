@@ -1,12 +1,12 @@
 package net.db0505.biomancybeyondcomprehension.network;
 
 
+import net.db0505.biomancybeyondcomprehension.block.entity.ScryingEyeBlockEntity;
 import net.db0505.biomancybeyondcomprehension.client.screen.EyeCameraScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -19,8 +19,8 @@ public class ViewEyePacket {
         this.pos = pos;
     }
 
-    public static void encode(ViewEyePacket pkt, FriendlyByteBuf buf) {
-        buf.writeBlockPos(pkt.pos);
+    public static void encode(ViewEyePacket msg, FriendlyByteBuf buf) {
+        buf.writeBlockPos(msg.pos);
     }
 
     public static ViewEyePacket decode(FriendlyByteBuf buf) {
@@ -29,22 +29,27 @@ public class ViewEyePacket {
 
     public static void handle(ViewEyePacket msg, Supplier<NetworkEvent.Context> ctx) {
 
-        ctx.get().enqueueWork(() -> {
-            // Only run client-side
-            if (ctx.get().getDirection().getReceptionSide().isClient()) {
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                    Minecraft mc = Minecraft.getInstance();
-                    if (mc != null) {
-                        mc.setScreen(new EyeCameraScreen(msg.pos));
-                    }
-                });
+        NetworkEvent.Context context = ctx.get();
+
+        // THIS ensures it only runs client-side
+        context.enqueueWork(() -> {
+
+            if (context.getDirection().getReceptionSide().isClient()) {
+
+                Minecraft mc = Minecraft.getInstance();
+
+                if (mc.level == null)
+                    return;
+
+                BlockEntity be = mc.level.getBlockEntity(msg.pos);
+
+                if (be instanceof ScryingEyeBlockEntity eye) {
+
+                    mc.setScreen(new EyeCameraScreen(eye.getBlockPos()));
+                }
             }
         });
 
-        ctx.get().setPacketHandled(true);
-    }
-
-    public BlockPos getPos() {
-        return pos;
+        context.setPacketHandled(true);
     }
 }

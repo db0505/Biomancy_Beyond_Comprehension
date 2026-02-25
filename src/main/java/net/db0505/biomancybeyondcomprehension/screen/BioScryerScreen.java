@@ -2,8 +2,10 @@ package net.db0505.biomancybeyondcomprehension.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
+import net.db0505.biomancybeyondcomprehension.client.screen.EyeCameraScreen;
 import net.db0505.biomancybeyondcomprehension.network.ModNetworking;
 import net.db0505.biomancybeyondcomprehension.network.ViewEyePacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -59,8 +61,9 @@ public class BioScryerScreen extends AbstractContainerScreen<BioScryerMenu> {
                         if (index < eyes.size()) {
                             // Open the camera feed for this eye
                             BlockPos eyePos = eyes.get(index);
-                            ModNetworking.CHANNEL.sendToServer(new ViewEyePacket(eyePos));
-                        }
+                            Minecraft.getInstance().setScreen(
+                                    new EyeCameraScreen(eyePos));
+                        };
                     }).bounds(x, y, 16, 16).build();
 
             eyeButtons.add(button);
