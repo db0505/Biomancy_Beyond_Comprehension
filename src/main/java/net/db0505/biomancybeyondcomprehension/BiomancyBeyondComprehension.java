@@ -8,6 +8,7 @@ import net.db0505.biomancybeyondcomprehension.entity.Client.MalformedFleshBlobRe
 import net.db0505.biomancybeyondcomprehension.entity.ModEntities;
 import net.db0505.biomancybeyondcomprehension.item.ModCreativeModeTabs;
 import net.db0505.biomancybeyondcomprehension.item.BeyondModItems;
+import net.db0505.biomancybeyondcomprehension.network.ModNetworking;
 import net.db0505.biomancybeyondcomprehension.screen.BioScryerScreen;
 import net.db0505.biomancybeyondcomprehension.screen.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -51,6 +52,8 @@ public class BiomancyBeyondComprehension
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+
+        ModNetworking.register();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
