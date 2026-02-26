@@ -61,8 +61,7 @@ public class BioScryerScreen extends AbstractContainerScreen<BioScryerMenu> {
                         if (index < eyes.size()) {
                             // Open the camera feed for this eye
                             BlockPos eyePos = eyes.get(index);
-                            Minecraft.getInstance().setScreen(
-                                    new EyeCameraScreen(eyePos));
+                            Minecraft.getInstance().setScreen(new EyeCameraScreen(eyePos));
                         };
                     }).bounds(x, y, 16, 16).build();
 
