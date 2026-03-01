@@ -3,6 +3,7 @@ package net.db0505.biomancybeyondcomprehension;
 import com.mojang.logging.LogUtils;
 import net.db0505.biomancybeyondcomprehension.block.ModBlocks;
 import net.db0505.biomancybeyondcomprehension.block.entity.ModBlockEntities;
+import net.db0505.biomancybeyondcomprehension.entity.Client.FleshDragonRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.Client.FleshWeaverRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.Client.MalformedFleshBlobRenderer;
 import net.db0505.biomancybeyondcomprehension.entity.ModEntities;
@@ -85,6 +86,7 @@ public class BiomancyBeyondComprehension
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.MalformedFleshBlob.get(), MalformedFleshBlobRenderer::new);
             EntityRenderers.register(ModEntities.FleshWeaver.get(), FleshWeaverRenderer::new);
+            EntityRenderers.register(ModEntities.FleshDragon.get(), FleshDragonRenderer::new);
 
             MenuScreens.register(ModMenuTypes.BIO_SCRYER_MENU.get(), BioScryerScreen::new);
         }

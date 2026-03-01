@@ -1,24 +1,40 @@
 package net.db0505.biomancybeyondcomprehension.client.screen;
 
-import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.pipeline.TextureTarget;
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
 
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
+
+@OnlyIn(Dist.CLIENT)
 public class EyeCameraScreen extends Screen {
+
+    private static final ResourceLocation CAMERA_PLACEHOLDER =
+            ResourceLocation.fromNamespaceAndPath("biomancybeyondcomprehension", "textures/gui/camera_feed_placeholder.png");
 
     private final BlockPos eyePos;
     private Button exitButton;
+    private final int feedSizeWidth = 360;
+    private final int feedSizeHeight = 200;
 
-    private static final ResourceLocation CAMERA_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("biomancybeyondcomprehension",
-                    "textures/gui/camera_feed_placeholder.png");
+    private final Minecraft mc = Minecraft.getInstance();
 
     public EyeCameraScreen(BlockPos eyePos) {
-        super(Component.literal("Camera Feed"));
+        super(net.minecraft.network.chat.Component.literal("Camera Feed"));
         this.eyePos = eyePos;
     }
 
@@ -26,26 +42,23 @@ public class EyeCameraScreen extends Screen {
     protected void init() {
         super.init();
 
-        exitButton = Button.builder(Component.literal("Exit"), b -> {
-            this.minecraft.setScreen(null); // close screen
-        }).bounds(this.width / 2 - 50, this.height - 30, 100, 20).build();
-
+        // Exit button
+        exitButton = Button.builder(net.minecraft.network.chat.Component.literal("Exit"), b -> mc.setScreen(null))
+                .bounds(this.width / 2 - 50, this.height - 30, 100, 20)
+                .build();
         addRenderableWidget(exitButton);
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(guiGraphics);
+    public void render(GuiGraphics gui, int mouseX, int mouseY, float partialTick) {
+        renderBackground(gui);
 
-        // Draw placeholder camera feed
-        int feedWidth = 360;
-        int feedHeight = 200;
-        int x = this.width / 2 - feedWidth / 2;
-        int y = this.height / 2 - feedHeight / 2 - 20;
+        // Draw placeholder feed
+        int x = this.width / 2 - feedSizeWidth / 2;
+        int y = this.height / 2 - feedSizeHeight / 2;
+        gui.blit(CAMERA_PLACEHOLDER, x, y, feedSizeWidth, feedSizeHeight, 0, 0, feedSizeWidth, feedSizeHeight, feedSizeWidth, feedSizeHeight);
 
-        guiGraphics.blit(CAMERA_TEXTURE, x, y, 0, 0, feedWidth, feedHeight, feedWidth, feedHeight);
-
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        super.render(gui, mouseX, mouseY, partialTick);
     }
 
     @Override

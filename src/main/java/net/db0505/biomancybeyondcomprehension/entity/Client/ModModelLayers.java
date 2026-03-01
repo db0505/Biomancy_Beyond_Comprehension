@@ -11,4 +11,6 @@ public class ModModelLayers {
     public static final ModelLayerLocation FLESH_WEAVER_LAYER = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(BiomancyBeyondComprehension.MOD_ID, "flesh_weaver_layer"), "main");
 
+    public static final ModelLayerLocation FLESH_DRAGON_LAYER = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(BiomancyBeyondComprehension.MOD_ID, "flesh_dragon_layer"), "main");
 }

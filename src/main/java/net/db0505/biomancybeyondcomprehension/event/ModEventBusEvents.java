@@ -2,6 +2,7 @@ package net.db0505.biomancybeyondcomprehension.event;
 
 import net.db0505.biomancybeyondcomprehension.BiomancyBeyondComprehension;
 import net.db0505.biomancybeyondcomprehension.entity.ModEntities;
+import net.db0505.biomancybeyondcomprehension.entity.custom.FleshDragonEntity;
 import net.db0505.biomancybeyondcomprehension.entity.custom.FleshWeaverEntity;
 import net.db0505.biomancybeyondcomprehension.entity.custom.MalformedFleshBlobEntity;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -14,5 +15,6 @@ public class ModEventBusEvents {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.MalformedFleshBlob.get(), MalformedFleshBlobEntity.createAttributes().build());
         event.put(ModEntities.FleshWeaver.get(), FleshWeaverEntity.createAttributes().build());
+        event.put(ModEntities.FleshDragon.get(), FleshDragonEntity.createAttributes().build());
     }
 }
