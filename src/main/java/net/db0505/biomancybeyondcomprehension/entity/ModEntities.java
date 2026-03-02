@@ -26,7 +26,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<FleshDragonEntity>> FleshDragon =
             ENTITY_TYPES.register("fleshdragon", () -> EntityType.Builder.of(FleshDragonEntity::new, MobCategory.CREATURE)
-                    .sized(2.5f,3f).build("fleshdragon"));
+                    .sized(3f,4.5f).build("fleshdragon"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public class FleshDragonRenderer extends MobRenderer<FleshDragonEntity, FleshDragonModel<FleshDragonEntity>> {
 
     public FleshDragonRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new FleshDragonModel<>(pContext.bakeLayer(ModModelLayers.FLESH_DRAGON_LAYER)), .5f);
+        super(pContext, new FleshDragonModel<>(pContext.bakeLayer(ModModelLayers.FLESH_DRAGON_LAYER)), 3f);
     }
 
     @Override
