@@ -3,14 +3,13 @@ package net.db0505.biomancybeyondcomprehension.entity.Client;// Made with Blockb
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.db0505.biomancybeyondcomprehension.entity.Animations.ModAnimationsDefinitions;
-import net.db0505.biomancybeyondcomprehension.entity.custom.MalformedFleshBlobEntity;
+import net.db0505.biomancybeyondcomprehension.entity.custom.FleshDragonEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 public class FleshDragonModel<T extends Entity> extends HierarchicalModel<T> {
@@ -149,7 +148,12 @@ public class FleshDragonModel<T extends Entity> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+		//this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
+		//this.animateWalk(ModAnimationsDefinitions.Malformed_Flesh_Blob_Move_Anim, limbSwing, limbSwingAmount, 2f , 2.5f);
+		this.animate(((FleshDragonEntity) entity).idleGroundAnimationState, ModAnimationsDefinitions.Flesh_Dragon_Ground_Idle_Anim, ageInTicks, 1f);
+		this.animate(((FleshDragonEntity) entity).HoveringAnimationState, ModAnimationsDefinitions.Flesh_Dragon_Hovering_Anim, ageInTicks, 1f);
 	}
 
 	@Override

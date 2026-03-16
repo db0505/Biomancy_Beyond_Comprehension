@@ -51,7 +51,6 @@ public class MalformedFleshBlobEntity extends PathfinderMob {
         this.walkAnimation.update(f, 0.2f);
     }
 
-
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)

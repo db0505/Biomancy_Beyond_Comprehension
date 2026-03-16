@@ -64,8 +64,8 @@ public class MalformedFleshBlobModel<T extends Entity> extends HierarchicalModel
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
-		this.animateWalk(ModAnimationsDefinitions.Move_Anim, limbSwing, limbSwingAmount, 2f , 2.5f);
-		this.animate(((MalformedFleshBlobEntity) entity).idleAnimationState, ModAnimationsDefinitions.Idle_Anim, ageInTicks, 1f);
+		this.animateWalk(ModAnimationsDefinitions.Malformed_Flesh_Blob_Move_Anim, limbSwing, limbSwingAmount, 2f , 2.5f);
+		this.animate(((MalformedFleshBlobEntity) entity).idleAnimationState, ModAnimationsDefinitions.Malformed_Flesh_Blob_Idle_Anim, ageInTicks, 1f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

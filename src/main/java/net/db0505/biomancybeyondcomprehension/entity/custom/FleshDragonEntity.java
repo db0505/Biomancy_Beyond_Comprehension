@@ -12,7 +12,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -21,7 +20,13 @@ import javax.annotation.Nullable;
 
 public class FleshDragonEntity extends PathfinderMob {
 
-    private boolean flying = false;
+    public final AnimationState idleGroundAnimationState = new AnimationState();
+    public final AnimationState HoveringAnimationState = new AnimationState();
+    private int idleGroundAnimationTimeout = 0;
+    private int HoveringAnimationTimeout = 0;
+
+    private boolean hovering = false;
+    private int hoveringCooldown = 100;
 
     public FleshDragonEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -65,21 +70,48 @@ public class FleshDragonEntity extends PathfinderMob {
     public void tick() {
         super.tick();
 
+        if(this.level().isClientSide) {
+            setupAnimationState();
+        }
+
         if (this.isVehicle()) {
             Entity rider = this.getFirstPassenger();
 
             if (rider instanceof Player player) {
-
-                // jump = start flying
-                if (ModKeyBindings.INSTANCE.FlyUp.consumeClick()) {
-                    setFlying(true);
+                // jump = start hovering
+                if (hoveringCooldown > 0)
+                {
+                    hoveringCooldown -= 1;
                 }
 
-                // sneak = land
-                if (ModKeyBindings.INSTANCE.FlyDown.consumeClick()) {
-                    setFlying(false);
+                if (!hovering && hoveringCooldown < 1) {
+                    if (ModKeyBindings.INSTANCE.FlyUp.consumeClick()) {
+                        setHovering(true);
+                    }
+                }
+                // grounded = stop hovering
+                if (hovering && hoveringCooldown < 1) {
+                    if (this.onGround()) {
+                        setHovering(false);
+                    }
                 }
             }
+        }
+    }
+
+    public void setHovering(boolean hovering) {
+        this.hovering = hovering;
+
+        if (hovering) {
+            this.setNoGravity(true);
+            this.navigation = new FlyingPathNavigation(this, level());
+            this.HoveringAnimationState.start(this.tickCount);
+            hoveringCooldown = 100;
+        } else {
+            this.setNoGravity(false);
+            this.navigation = new GroundPathNavigation(this, level());
+            this.idleGroundAnimationState.start(this.tickCount);
+            hoveringCooldown = 100;
         }
     }
 
@@ -93,31 +125,25 @@ public class FleshDragonEntity extends PathfinderMob {
             float forward = rider.zza;
             float strafe = rider.xxa;
 
-            if (flying) {
+            if (hovering) {
 
                 // vertical movement
                 double vertical = 0;
 
                 if (ModKeyBindings.INSTANCE.FlyUp.isDown()) {
-                    vertical = 100;
+                    vertical = 50;
                     System.out.println("Flyup!");
                 }
 
                 if (ModKeyBindings.INSTANCE.FlyDown.isDown()) {
-                    vertical = -100;
+                    vertical = -50;
                     System.out.println("FlyDown!");
                 }
 
-                Vec3 motion = new Vec3(strafe, vertical, forward)
-                        .normalize()
-                        .scale(getAttributeValue(Attributes.MOVEMENT_SPEED) * 2);
-
-                this.setDeltaMovement(motion);
+                super.travel(new Vec3(strafe, vertical, forward));
 
             } else {
-
                 super.travel(new Vec3(strafe, travelVector.y, forward));
-
             }
 
             return;
@@ -161,8 +187,6 @@ public class FleshDragonEntity extends PathfinderMob {
         }
     }
 
-
-
     @Nullable
     public LivingEntity getControllingPassenger() {
         Entity entity = this.getFirstPassenger();
@@ -182,24 +206,23 @@ public class FleshDragonEntity extends PathfinderMob {
         return (float)this.getAttributeValue(Attributes.MOVEMENT_SPEED);
     }
 
-    public boolean isFlying() {
-        return flying;
+    public boolean isHovering() {
+        return hovering;
     }
 
-    public void setFlying(boolean flying) {
-        this.flying = flying;
-
-        if (flying) {
-            this.setNoGravity(true);
-            this.navigation = new FlyingPathNavigation(this, level());
+    private void setupAnimationState() {
+        /*
+        if(this.idleAnimationTimeout <= 0) {
+            this.idleAnimationTimeout = this.random.nextInt(40) + 80;
+            this.idleGroundAnimationState.start(this.tickCount);
         } else {
-            this.setNoGravity(false);
-            this.navigation = new GroundPathNavigation(this, level());
+            --this.idleAnimationTimeout;
         }
+         */
     }
 
     @Override
     public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
-        return !flying && super.causeFallDamage(fallDistance, multiplier, source);
+        return !hovering && super.causeFallDamage(fallDistance, multiplier, source);
     }
 }
