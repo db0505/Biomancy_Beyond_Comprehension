@@ -25,5 +25,12 @@ public final class ModKeyBindings {
             InputConstants.getKey(InputConstants.KEY_LSHIFT, -1),
             KeyMapping.CATEGORY_GAMEPLAY
     );
+
+    public final KeyMapping ChangeFlightMode = new KeyMapping(
+            "key." + BiomancyBeyondComprehension.MOD_ID + ".change_flight_mode",
+            KeyConflictContext.IN_GAME,
+            InputConstants.getKey(InputConstants.KEY_R, -1),
+            KeyMapping.CATEGORY_GAMEPLAY
+    );
 }
 
